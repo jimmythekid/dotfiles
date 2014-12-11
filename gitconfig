@@ -1,0 +1,7 @@
+[user]
+	name = jimmythekid
+	email = jimmy.mcerlain@gmail.com
+[core]
+	editor = vim
+[push]
+	default = simple
