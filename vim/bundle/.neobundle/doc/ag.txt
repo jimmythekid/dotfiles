@@ -1,0 +1,230 @@
+*ag.txt*   Plugin that integrates ag with Vim
+
+==============================================================================
+INTRODUCTION                                                             *ag*
+
+This plugin is a front for the_silver_searcher: ag.  Ag can be used as a
+replacement for ack.  This plugin will allow you to run ag from vim, and
+shows the results in a split window.
+
+:Ag[!] [options] {pattern} [{directory}]                               *:Ag*
+
+    Search recursively in {directory} (which defaults to the current
+    directory) for the {pattern}.  Behaves just like the |:grep| command, but
+    will open the |Quickfix| window for you. If [!] is not given the first
+    error is jumped to.
+
+:AgAdd [options] {pattern} [{directory}]                            *:AgAdd*
+
+    Just like |:Ag|, but instead of making a new list, the matches are
+    appended to the current |quickfix| list.
+
+:AgFromSearch [{directory}]                                  *:AgFromSearch*
+
+    Just like |:Ag| but the pattern is from previous search.
+
+:LAg [options] {pattern} [{directory}]                                *:LAg*
+
+    Just like |:Ag| but instead of the |quickfix| list, matches are placed in
+    the current |location-list|.
+
+:LAgAdd [options] {pattern} [{directory}]                          *:LAgAdd*
+
+    Just like |:AgAdd| but instead of the |quickfix| list, matches are added
+    to the current |location-list|
+
+:AgFile [options] {pattern} [{directory}]                          *:AgFile*
+
+    Search recursively in {directory} (which defaults to the current
+    directory) for filenames matching the {pattern}.  Behaves just like the
+    |:grep| command, but will open the |Quickfix| window for you.
+
+:AgHelp[!] [options] {pattern}                                      *:AgHelp*
+
+    Search vim documentation files for the {pattern}.  Behaves just like the
+    |:Ag| command, but searches only vim documentation .txt files
+
+:LAgHelp [options] {pattern}                                        *:LAgHelp*
+
+    Just like |:AgHelp| but instead of the |quickfix| list, matches are placed
+    in the current |location-list|.
+
+:AgForCurrentFileDir [options] {pattern}                *:AgForCurrentFileDir*
+
+    Uses the 'current_file_dir' option to ensure that we limit the search to
+    the directory of the current buffer's file
+
+:AgForProjectRoot [options] {pattern}                      *:AgForProjectRoot*
+
+    The notion of a "project" is the directory subtree that starts at the root
+    of a source control managed directory.  This is currently defined with
+    'g:ag_scm_dirs' variable.
+
+:AgForExtension [options] {pattern}                         *:AgForExtension*
+
+    This command exists to let you specify a number of specific file extensions.
+    It implies the "scmdir" option so if you don't want that you'll have to
+    create a new command on your own (or override this one).  Call it like
+    this: >
+
+      AgForExtension 'search for me' .js .java .txt
+<
+    This will search for 'search for me' in {js}, {java} and {txt} files.  The
+    leading "." on all of the extensions is optional.
+
+Files containing the search term will be listed in the split window, along
+with the line number of the occurrence, once for each occurrence.  <Enter> on
+a line in this window will open the file, and place the cursor on the matching
+line.
+
+See http://geoff.greer.fm/2011/12/27/the-silver-searcher-better-than-ack/ for
+more information.
+
+==============================================================================
+OPTIONS                                                          *ag-options*
+
+                                                                    *g:agprg*
+The location of the Ag program, and any options you want passed to it before
+searching.  Default: "ag --column".  Example: >
+  let g:agprg="ag --column --smart-case"
+<
+
+                                                              *g:aghighlight*
+If 1, highlight the search terms after searching.  Default: 0.  Example: >
+  let g:aghighlight=1
+<
+
+                                                                 *g:agformat*
+Format to recognize the matches.  See 'errorformat' for more info.  Default:
+"%f" when searching for files, "%f:%l:%c:%m" if not otherwise set.  For
+example, if your `g:agprg` is set to just "ag" (no column numbers in the
+output, so when you jump to a match your cursor will be on the start of the
+line): >
+  let g:agformat="%f:%l:%m"
+<
+
+                                                       *g:ag_apply_lmappings*
+Whether or not to add custom mappings to location list windows opened by this
+plugin.  Only applies if you're using the location list.  Default 1.  Example: >
+  let g:ag_apply_lmappings=0
+<
+
+                                                       *g:ag_apply_qmappings*
+Whether or not to add custom mappings to quickfix windows opened by this
+plugin.  Only applies if you're using the error list.  Default 1.  Example: >
+  let g:ag_apply_qmappings=0
+<
+
+                                                              *g:ag_lhandler*
+A custom command used to open the location list after it's populated.
+Default: "botright lopen".  You might want to set this to change where the
+location list is opened, or what size it is.  Example: >
+  let g:ag_lhandler="topleft lopen"
+<
+
+                                                              *g:ag_qhandler*
+A custom command used to open the error list after it's populated.  Default:
+"botright copen".  You might want to set this to change where the quickfix
+window is opened, or what size it is.  Example: >
+  let g:ag_qhandler="copen 20"
+<
+
+                                                       *g:ag_mapping_message*
+Whether or not to show the message explaining the extra mappings that are
+added to the results list this plugin populates.  This message is not shown if
+the mappings are not applied (see |g:ag_apply_qmappings| and
+|g:ag_apply_lmappings| for more info.  Default 1.  Example: >
+  let g:ag_mapping_message=0
+<
+                                                              *g:ag_scm_dirs*
+This is a list containing the directories that should be treated as source
+control management directories.  It's what allows this plugin to limit the
+searches to subtrees of entire source directories.
+
+==============================================================================
+THE AG FUNCTION                                                 *ag-function*
+
+The ag#Ag() function has some special configuration options that you might be
+interested in.  The permutations are annoying so pre-canning all of those
+permutations hasn't been done.  The function looks like >
+
+    ag#Ag(command, arguments, options)
+<
+The first two should always look something like: >
+
+    ag#Ag('grep<bang>', <a-args>, ...)
+<
+But the "options" argument is a dictionary.  You can put the following into
+the dictionary: 
+>
+    'current_file_ext': 1
+<
+    Limits the search to the current buffer's file's extension (e.g. ".vim")
+>
+    'current_file_dir': 1
+<
+    Limits the search to the current buffer's file's directory.
+>
+    'scmdir': 1
+<
+    Limits the search to the "project" root subtree. This will search up the
+    directory tree for the first of the elements in the g:ag_scm_dirs list and
+    use that containing directoy as the directory argument to ag.
+>
+    'specific_dirs': 'directory1 directory2 and so forth'
+<
+    Limits the search to the specific directories given in this string
+
+
+==============================================================================
+MAPPINGS                                                        *ag-mappings*
+
+The following keyboard shortcuts are available in the quickfix window:
+
+e                   open file and close the quickfix window.
+
+o                   open file (same as enter).
+
+go                  preview file (open but maintain focus on ag.vim results).
+
+t                   open in a new tab.
+
+T                   open in new tab silently.
+
+h                   open in horizontal split.
+
+H                  open in horizontal split silently.
+
+v                   open in vertical split.
+
+gv                  open in vertical split silently.
+
+q                   close the quickfix window.
+
+                                          *g:ag_results_mapping_replacements*
+You can customize all of the mappings using the
+g:ag_results_mapping_replacements dictionary.  The default values for the
+dictionary are: >
+
+  { 
+    'open_and_close':          'e'
+    'open':                    'o,<cr>'
+    'preview_open':            'go'
+    'new_tab':                 't'
+    'new_tab_silent':          'T'
+    'horizontal_split':        'h'
+    'horizontal_split_silent': 'H'
+    'vertical_split':          'v'
+    'vertical_split_silent':   'gv'
+    'quit':                    'q'
+  }
+<
+Personally, I prefer that <cr> closes the quickfix window, so I've customized
+these as: >
+
+  let g:ag_results_mapping_replacements = {
+  \   'open_and_close': '<cr>',
+  \   'open': 'o',
+  \ }
+<
+  vim:tw=78:fo=tcq2:ft=help:norl:

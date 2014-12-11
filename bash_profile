@@ -1,0 +1,6 @@
+alias ls="pwd; ls -la --color=auto"
+alias spark="cd /home/ubuntu/spark-1.1.0-bin-hadoop2.3/bin; ./spark-shell"
+alias fmem="htop"
+alias mysql_start="sudo /etc/init.d/mysql start"
+alias mysql_stop="sudo /etc/init.d/mysql stop"
+alias mysql="mysql -u root -p"
