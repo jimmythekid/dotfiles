@@ -1,9 +1,15 @@
 " James McErlain 2014.11.22
 " Intial Set Up and Settings
 
+let g:solarized_termcolors=256
+colorscheme solarized
+set background=light
+"colorscheme tomorrow-night
+
+
 syntax on
 
-colorscheme tomorrow-night
+"colorscheme tomorrow-night
 "colorscheme solarized
 
   set number
