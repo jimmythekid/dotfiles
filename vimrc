@@ -2,9 +2,9 @@
 " Intial Set Up and Settings
 
 let g:solarized_termcolors=256
-colorscheme solarized
-set background=light
-"colorscheme tomorrow-night
+"colorscheme solarized
+"set background=light
+colorscheme tomorrow-night
 
 
 syntax on
