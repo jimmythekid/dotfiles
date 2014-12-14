@@ -1,6 +1,7 @@
 " James McErlain 2014.11.22
 " Intial Set Up and Settings
 
+let base16colorspace=256  " Access colors present in 256 colorspace
 
   set number
   set autoread
@@ -142,7 +143,7 @@
  NeoBundle 'vim-scripts/twilight256.vim'
  NeoBundle 'tomasr/molokai'
  NeoBundle 'ywjno/vim-tomorrow-theme'
-
+ NeoBundle 'chriskempson/base16-vim'
 
  call neobundle#end()
 
@@ -162,10 +163,11 @@ command! Reload :so test.vimrc
 
 let g:solarized_termcolors=256
  "colorscheme solarized
- "colorscheme Tomorrow-Night-Eighties
+ colorscheme Tomorrow-Night-Eighties
  "colorscheme Tomorrow
  "colorscheme codeschool
- colorscheme twilight256
+ "colorscheme twilight256
+ "colorscheme base16-codeschool
  "colorscheme molokai
  "set background=light
 
