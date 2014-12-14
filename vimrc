@@ -163,13 +163,14 @@ command! Reload :so test.vimrc
 
 let g:solarized_termcolors=256
  "colorscheme solarized
- colorscheme Tomorrow-Night-Eighties
+ "colorscheme Tomorrow-Night-Eighties
  "colorscheme Tomorrow
  "colorscheme codeschool
  "colorscheme twilight256
- "colorscheme base16-codeschool
+ colorscheme base16-codeschool
  "colorscheme molokai
  "set background=light
+  set background=dark
 
 
 " Highlight Line and Cursor
