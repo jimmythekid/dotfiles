@@ -1,5 +1,14 @@
 #!/bin/bash
 
+sudo apt-get install gcc
+sudo apt-get install git
+sudo apt-get install scala
+sudo apt-get install 
+
+sudo apt-get install openjdk-7-jdk
+
+
+
 echo "making .dotfile directory"
 mkdir .dotfiles
 cd .dotfiles

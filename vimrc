@@ -1,16 +1,6 @@
 " James McErlain 2014.11.22
 " Intial Set Up and Settings
 
-let g:solarized_termcolors=256
-"colorscheme solarized
-"set background=light
-colorscheme tomorrow-night
-
-
-syntax on
-
-"colorscheme tomorrow-night
-"colorscheme solarized
 
   set number
   set autoread
@@ -61,11 +51,6 @@ syntax on
   set hlsearch                  " highlight the search
   set showmatch                 " show matching bracket
   set diffopt=filler,iwhite     " ignore all whitespace and sync
-
-
-	" Highlight Line and Cursor
-  hi CursorLine ctermbg=8 ctermfg=38
-  hi Cursor ctermbg=15 ctermfg=8
 
 
   " backup
@@ -151,9 +136,13 @@ syntax on
  NeoBundle 'VisIncr'
  NeoBundle 'drmingdrmer/xptemplate'
  NeoBundle 'GEverding/vim-hocon'
- NeoBundle 'chriskempson/tomorrow-theme'
  NeoBundle 'fatih/vim-go'
  NeoBundle 'wting/rust.vim'
+ NeoBundle '29decibel/codeschool-vim-theme'
+ NeoBundle 'vim-scripts/twilight256.vim'
+ NeoBundle 'tomasr/molokai'
+ NeoBundle 'ywjno/vim-tomorrow-theme'
+
 
  call neobundle#end()
 
@@ -164,5 +153,29 @@ syntax on
 " If there are uninstalled bundles found on startup,
 " this will conveniently prompt you to install them.
 
+
+filetype plugin indent on
+syntax enable
+
+command! Reload :so test.vimrc
+
+
+let g:solarized_termcolors=256
+ "colorscheme solarized
+  colorscheme Tomorrow-Night-Eighties
+ "colorscheme codeschool
+ "colorscheme twilight256
+ "colorscheme molokai
+ "set background=light
+
+
+" Highlight Line and Cursor
+  hi CursorLine ctermbg=8 ctermfg=38
+  hi Cursor ctermbg=15 ctermfg=8
+
+
+
+
  NeoBundleCheck
+
 
