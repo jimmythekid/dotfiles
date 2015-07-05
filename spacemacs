@@ -87,7 +87,9 @@ before layers configuration."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn
+   dotspacemacs-themes '(
+                         zenburn
+                         stekene-dark
                          solarized-light
                          solarized-dark
                          spacemacs-light
@@ -184,6 +186,7 @@ before layers configuration."
    layers configuration."
   (setq powerline-default-separator 'bar)
   (spacemacs/mode-line-battery-info-toggle)
+  (global-linum-mode t)
   ;;(spacemacs/set-font "Menlo" 9)
   ;;(spacemacs/set-font "Consolas" 8)
 )
