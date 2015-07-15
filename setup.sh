@@ -7,6 +7,7 @@
 #  Notes:   Bootstrap server config for
 #           .dotfiles on remote servers
 #
+#  Launch Script:  curl https://raw.githubusercontent.com/JimmyTheKid/dotfiles/setup.sh | sh
 #
 ###############################
 
@@ -19,6 +20,8 @@ sudo apt-get install openjdk-7-jdk
 
 sudo rm -rf ~/.emacs.d
 
+
+echo "pulling in spacemacs from github"
 git clone --recursive https://github.com/syl20bnr/spacemacs ~/.emacs.d
 
 
@@ -34,6 +37,8 @@ rm -R .dotfiles/vim/bundle
 
 echo "pulling in NeoBundle packages"
 curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+
+cd ..
 
 echo "removing old files and adding sim links to new"
 sudo rm -r .vim .vimrc .screenrc .gitconfig
